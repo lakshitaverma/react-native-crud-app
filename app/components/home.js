@@ -4,8 +4,11 @@ import {
     FlatList,
     View,
     Text,
-    ActivityIndicator, TouchableHighlight, ActionSheetIOS
+    ActivityIndicator,
+    TouchableHighlight
 } from 'react-native';
+
+import { ActionSheet, Button } from "native-base";
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -38,15 +41,18 @@ class Home extends Component {
     }
 
     showOptions(quote) {
-        ActionSheetIOS.showActionSheetWithOptions({
-                options: BUTTONS,
-                cancelButtonIndex: CANCEL_INDEX,
-                destructiveButtonIndex: 1,
-            },
-            (buttonIndex) => {
-                if (buttonIndex === 0) Actions.new_quote({quote: quote, edit: true, title:"Edit Quote"})
-                else if (buttonIndex === 1) this.props.deleteQuote(quote.id)
-            });
+      ActionSheet.show(
+        {
+          options: BUTTONS,
+          cancelButtonIndex: CANCEL_INDEX,
+          destructiveButtonIndex: 1,
+          title: "Testing ActionSheet"
+        },
+        (buttonIndex) => {
+            if (buttonIndex === 0) Actions.new_quote({quote: quote, edit: true, title:"Edit Quote"})
+            else if (buttonIndex === 1) this.props.deleteQuote(quote.id)
+        }
+      )
     }
 
     render() {
